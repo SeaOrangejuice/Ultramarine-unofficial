@@ -11,7 +11,6 @@ on: workflow_dispatch
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -36,6 +35,13 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+    - name: Archive artifacts (Ultramarine-forge-1.20.1-0.2.1)
+      uses: actions/upload-artifact@v4.3.1
+      if: success()
+      with:
+        name: Ultramarine-forge-1.20.1-0.2.1
+        path: build/libs/Ultramarine-forge-1.20.1-0.2.1.jar
+        if-no-files-found: error
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
     - name: Publish to GitHub Packages
